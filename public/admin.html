@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+</head>
+<title>Yodlr Design Challenge</title>
+<Link rel="stylesheet" href="./css/styles.css">
+
+<body>
+  <!-- list of all users from route /users-->
+  <div>
+    <h1>Users</h1>
+    <ul id="userList">
+    </ul>
+  </div>
+
+  <script>
+    // Function to fetch user data and populate the list
+    function fetchUsersAndPopulateList() {
+      const userListElement = document.getElementById("userList");
+
+      fetch("/users")
+        .then(response => response.json())
+        .then(usersData => {
+          let userListItems = "";
+
+          usersData.forEach(user => {
+            userListItems += `<li><a href="/users/${user.id}">${user.firstName} ${user.lastName}</a></li>`;
+          });
+
+          userListElement.innerHTML = userListItems;
+        })
+        .catch(error => console.error("Error fetching user data:", error));
+    }
+
+    // Call the function when the page is loaded
+    window.addEventListener("load", fetchUsersAndPopulateList);
+  </script>
+
+
+
+</body>
+
+</html>

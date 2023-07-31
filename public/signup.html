@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset=utf-8>
+  <title>Yodlr Registration Portal</title>
+  <Link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+  <h1>Yodlr Registration Portal</h1>
+  <form id="registrationForm">
+    Email: <input type="email" name="email"></br>
+    First Name: <input type="text" name="firstName"></br>
+    Last Name: <input type="text" name="lastName"></br>
+    <button type="submit">Submit</button>
+  </form>
+  <p>
+    <a href="/admin.html">Admin Page</a>
+  </p>
+
+  <script>
+    document.getElementById('registrationForm').addEventListener('submit', function (evt) {
+      evt.preventDefault();
+      // get email, firstName and lastName from form 
+      const email = document.querySelector('input[name="email"]').value;
+      const firstName = document.querySelector('input[name="firstName"]').value;
+      const lastName = document.querySelector('input[name="lastName"]').value;
+      // create a newUser
+      const newUser = {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+      }
+      // post newUser to /users
+      fetch('/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newUser)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Successful new User:', data);
+          // clear form
+          document.querySelector('input[name="email"]').value = '';
+          document.querySelector('input[name="firstName"]').value = '';
+          document.querySelector('input[name="lastName"]').value = '';
+        })
+    })
+
+  </script>
+</body>
+
+</html>
